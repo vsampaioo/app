@@ -15,7 +15,7 @@ st.title("🕵️ Buscador de Ofertas")
 if 'resultados' not in st.session_state:
     st.session_state['resultados'] = []
 
-produto = st.text_input("Qual produto você quer monitorar?", placeholder="Ex: iPhone 13, Crocs...")
+produto = st.text_input("Qual produto você quer ser avisado?", placeholder="Ex: iPhone 13, Monitor gamer...")
 
 if st.button("Pesquisar"):
     if not produto:
@@ -37,17 +37,17 @@ if len(st.session_state['resultados']) > 0:
                 
                 try:
                     preco_limpo = float(item['preco_atual'].replace('R$', '').replace('.', '').replace(',', '.').strip())
-                    valor_sugerido = preco_limpo * 0.9 # Sugere 10% desconto
+                    valor_sugerido = preco_limpo * 0.9
                 except:
                     valor_sugerido = 0.0
                     
-                preco_alvo = col2.number_input("Me avise se baixar para (R$):", value=valor_sugerido)
+                preco_alvo = col2.number_input("Avisa eu se baixar para (R$):", value=valor_sugerido)
                 
-                botao_salvar = st.form_submit_button("Criar Alerta 🔔")
+                botao_salvar = st.form_submit_button("Criar Alerta ")
                 
                 if botao_salvar:
                     if email_usuario:
                         salvar_no_banco(item['nome'], item['link'], email_usuario, preco_alvo)
-                        st.success(f"✅ Alerta Criado! Avisaremos em {email_usuario}")
+                        st.success(f"Alerta Criado! Avisaremos em {email_usuario}")
                     else:
                         st.error("Preencha o e-mail!")
